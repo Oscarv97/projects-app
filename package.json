@@ -24,7 +24,8 @@
     "reactflow": "^11.11.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^2.6.1",

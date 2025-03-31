@@ -3,7 +3,6 @@ import ReactFlow, {
   addEdge,
   Background,
   Controls,
-  MiniMap,
   Node,
   Edge,
   Connection,
@@ -22,9 +21,7 @@ interface ProjectTimelineProps {
 }
 
 const ProjectTimeline: React.FC<ProjectTimelineProps> = ({
-  items,
-  onEdit,
-  onDelete,
+  items
 }) => {
   const dispatch = useDispatch();
   const { nodes: reduxNodes, edges: reduxEdges } = useSelector(
@@ -95,7 +92,6 @@ const ProjectTimeline: React.FC<ProjectTimelineProps> = ({
         fitView
       >
         <Background color="#aaa" gap={16} />
-        <MiniMap />
         <Controls />
       </ReactFlow>
     </div>
