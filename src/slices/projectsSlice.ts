@@ -19,29 +19,32 @@ const initialState: ProjectsState = {
 };
 
 const projectsSlice = createSlice({
-  name: 'projects',
-  initialState,
-  reducers: {
-    addProject: (state, action: PayloadAction<Omit<Project, 'id' | 'createdDate'>>) => {
+    name: 'projects',
+    initialState,
+    reducers: {
+      addProject: (state, action: PayloadAction<Omit<Project, 'id' | 'createdDate'>>) => {
         const newProject = {
           ...action.payload,
-          id: uuidv4(),          createdDate: new Date(),
+          id: uuidv4(),
+          createdDate: new Date(),
         };
         state.items.push(newProject);
       },
-    editProject: (state, action: PayloadAction<{ id: string; newName: string }>) => {
-      const { id, newName } = action.payload;
-      const project = state.items.find((item) => item.id === id);
-      if (project) {
-        project.name = newName;
-      }
+      editProject: (state, action: PayloadAction<{ id: string; newName: string }>) => {
+        const { id, newName } = action.payload;
+        const project = state.items.find((item) => item.id === id);
+        if (project) {
+          project.name = newName;
+        }
+      },
+      deleteProject: (state, action: PayloadAction<string>) => {
+        state.items = state.items.filter((item) => item.id !== action.payload);
+      },
+      updateProjectOrder: (state, action: PayloadAction<Project[]>) => {
+        state.items = action.payload;
+      },
     },
-
-    deleteProject: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
-    },
-  },
-});
-
-export const { addProject, editProject, deleteProject } = projectsSlice.actions;
-export default projectsSlice.reducer;
+  });
+  
+  export const { addProject, editProject, deleteProject, updateProjectOrder } = projectsSlice.actions;
+  export default projectsSlice.reducer;

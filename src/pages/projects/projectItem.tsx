@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { DeleteOutlined, EditOutlined, CheckOutlined } from "@ant-design/icons";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface ProjectRowProps {
   id: string;
@@ -20,13 +22,27 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
 
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   const handleSave = () => {
     onEdit(id, editedName);
     setIsEditing(false);
   };
 
   return (
-    <div className="flex items-center justify-between p-4 mb-0 border-t border-b border-gray-300 bg-white hover:border hover:border-black">
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="flex items-center justify-between p-4 mb-0 border-t border-b border-gray-300 bg-white hover:border hover:border-black"
+    >
       <div className="flex items-center space-x-8">
         <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full">
           {name.charAt(0).toUpperCase()}
@@ -61,7 +77,8 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
         {new Date(createdDate).toLocaleDateString("en-US", {
           month: "long",
           day: "numeric",
-        })},{" "}
+        })}
+        ,{" "}
         {new Date(createdDate).toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "numeric",
