@@ -87,6 +87,10 @@ Follow these steps to set up and run the project locally:
 
 ## Project Structure 📂
 
+# Bonus Feature - Timeline view
+The Idea here was to show how projects or task could be visualized for tracking or dependency tracking.
+Its just the basic implementation to persists some data
+
 ```
 vite-react-tailwind-starter/
 ├── src/
