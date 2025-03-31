@@ -3,7 +3,7 @@ import projectsReducer from '../slices/projectsSlice';
 
 const store = configureStore({
   reducer: {
-    example: projectsReducer,
+    projects: projectsReducer,
   },
 });
 
