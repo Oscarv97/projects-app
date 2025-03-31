@@ -1,4 +1,4 @@
-# Oscar Vial Thunkable Tech test
+# Oscar Vial Projects app
 
 This project is a modern web development starter template built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. It is designed to provide a fast, scalable, and maintainable foundation for building modern web applications.
 
