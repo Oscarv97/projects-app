@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DeleteOutlined, EditOutlined, CheckOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, CheckOutlined, DragOutlined } from "@ant-design/icons";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -7,7 +7,7 @@ interface ProjectRowProps {
   id: string;
   name: string;
   description?: string;
-  createdDate: Date;
+  createdDate: string;
   onEdit: (id: string, newName: string) => void;
   onDelete: (id: string) => void;
 }
@@ -39,11 +39,17 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className="flex items-center justify-between p-4 mb-0 border-t border-b border-gray-300 bg-white hover:border hover:border-black"
+      className="flex items-center justify-between p-4 border-t border-b border-gray-300 bg-white hover:border hover:border-black"
     >
-      <div className="flex items-center space-x-8">
+      <div
+        {...attributes}
+        {...listeners}
+        className="cursor-grab flex items-center pr-4"
+      >
+        <DragOutlined />
+      </div>
+
+      <div className="flex-1 flex items-center space-x-8">
         <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full">
           {name.charAt(0).toUpperCase()}
         </div>
@@ -59,20 +65,8 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
             <h3 className="font-semibold text-gray-800">{name}</h3>
           )}
         </div>
-        <div>
-          <button
-            className="text-blue-500 hover:text-blue-600"
-            onClick={isEditing ? handleSave : () => setIsEditing(true)}
-            aria-label={isEditing ? "Save" : "Edit"}
-          >
-            {isEditing ? (
-              <CheckOutlined />
-            ) : (
-              <EditOutlined className="text-gray-800" />
-            )}
-          </button>
-        </div>
       </div>
+
       <span className="text-sm text-gray-400">
         {new Date(createdDate).toLocaleDateString("en-US", {
           month: "long",
@@ -85,7 +79,19 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
           hour12: true,
         })}{" "}
       </span>
+
       <div className="flex items-center space-x-4">
+        <button
+          className="text-blue-500 hover:text-blue-600"
+          onClick={isEditing ? handleSave : () => setIsEditing(true)}
+          aria-label={isEditing ? "Save" : "Edit"}
+        >
+          {isEditing ? (
+            <CheckOutlined />
+          ) : (
+            <EditOutlined className="text-gray-800" />
+          )}
+        </button>
         <button
           className="text-red-500 hover:text-red-600"
           onClick={() => onDelete(id)}

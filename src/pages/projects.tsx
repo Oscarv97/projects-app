@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -21,7 +21,11 @@ import ProjectItem from "./projects/projectItem";
 const ProjectsTable: React.FC = () => {
   const projects = useSelector((state: RootState) => state.projects.items);
   const dispatch = useDispatch();
-  const [items, setItems] = useState(projects);
+  const [items, setItems] = useState(projects); 
+
+  useEffect(() => {
+    setItems(projects);
+  }, [projects]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -29,19 +33,19 @@ const ProjectsTable: React.FC = () => {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-  
+
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-  
+
     if (!over || active.id === over.id) return;
-  
+
     const oldIndex = items.findIndex((item) => item.id === active.id);
     const newIndex = items.findIndex((item) => item.id === over.id);
-  
+
     const reorderedItems = arrayMove(items, oldIndex, newIndex);
     setItems(reorderedItems);
-  
-    dispatch(updateProjectOrder(reorderedItems));
+
+    dispatch(updateProjectOrder(reorderedItems)); 
   };
 
   return (
