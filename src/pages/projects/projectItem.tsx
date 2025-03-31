@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { DeleteOutlined, EditOutlined, CheckOutlined, DragOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  CheckOutlined,
+  DragOutlined,
+} from "@ant-design/icons";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -49,56 +54,60 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
         <DragOutlined />
       </div>
 
-      <div className="flex-1 flex items-center space-x-8">
-        <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full">
-          {name.charAt(0).toUpperCase()}
+      <div className="flex-1 flex items-center justify-between space-x-4">
+        <div className="flex items-center space-x-4">
+          <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full">
+            {name.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            {isEditing ? (
+              <input
+                type="text"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+                className="px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            ) : (
+              <h3 className="font-semibold text-gray-800">{name}</h3>
+            )}
+          </div>
         </div>
-        <div>
-          {isEditing ? (
-            <input
-              type="text"
-              value={editedName}
-              onChange={(e) => setEditedName(e.target.value)}
-              className="px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
-            />
-          ) : (
-            <h3 className="font-semibold text-gray-800">{name}</h3>
-          )}
+        <div className="flex items-center">
+          <button
+            className="text-blue-500 hover:text-blue-600"
+            onClick={isEditing ? handleSave : () => setIsEditing(true)}
+            aria-label={isEditing ? "Save" : "Edit"}
+          >
+            {isEditing ? (
+              <CheckOutlined />
+            ) : (
+              <EditOutlined className="text-gray-800" />
+            )}
+          </button>
         </div>
-      </div>
 
-      <span className="text-sm text-gray-400">
-        {new Date(createdDate).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-        })}
-        ,{" "}
-        {new Date(createdDate).toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          hour12: true,
-        })}{" "}
-      </span>
+        <span className="text-sm text-gray-400 text-center">
+          {new Date(createdDate).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+          })}
+          ,{" "}
+          {new Date(createdDate).toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          })}
+        </span>
 
-      <div className="flex items-center space-x-4">
-        <button
-          className="text-blue-500 hover:text-blue-600"
-          onClick={isEditing ? handleSave : () => setIsEditing(true)}
-          aria-label={isEditing ? "Save" : "Edit"}
-        >
-          {isEditing ? (
-            <CheckOutlined />
-          ) : (
-            <EditOutlined className="text-gray-800" />
-          )}
-        </button>
-        <button
-          className="text-red-500 hover:text-red-600"
-          onClick={() => onDelete(id)}
-          aria-label="Delete"
-        >
-          <DeleteOutlined className="text-gray-800" />
-        </button>
+        <div className="flex items-center space-x-4">
+          <button
+            className="text-red-500 hover:text-red-600"
+            onClick={() => onDelete(id)}
+            aria-label="Delete"
+          >
+            <DeleteOutlined className="text-gray-800" />
+          </button>
+        </div>
       </div>
     </div>
   );
