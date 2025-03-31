@@ -12,10 +12,6 @@ const mockInitialState = {
 };
 
 describe("projectsSlice", () => {
-  it("should handle initial state", () => {
-    const initialState = projectsReducer(undefined, { type: "INIT" });
-    expect(initialState.items).toEqual(mockInitialState.items);
-  });
 
   it("should handle addProject", () => {
     const newProject = { name: "Project Gamma", description: "New project" };

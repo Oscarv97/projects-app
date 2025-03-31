@@ -49,9 +49,11 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
       <div
         {...attributes}
         {...listeners}
-        className="cursor-grab flex items-center pr-4"
+        className="cursor-grab flex items-center pr-4 py-2"
       >
-        <DragOutlined />
+        <div className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full">
+          <DragOutlined className="text-gray-600" />
+        </div>
       </div>
 
       <div className="flex-1 flex items-center justify-between space-x-4">
@@ -65,25 +67,12 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
                 type="text"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
-                className="px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+                className="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200 w-full max-w-[150px] sm:max-w-[200px]"
               />
             ) : (
               <h3 className="font-semibold text-gray-800">{name}</h3>
             )}
           </div>
-        </div>
-        <div className="flex items-center">
-          <button
-            className="text-blue-500 hover:text-blue-600"
-            onClick={isEditing ? handleSave : () => setIsEditing(true)}
-            aria-label={isEditing ? "Save" : "Edit"}
-          >
-            {isEditing ? (
-              <CheckOutlined />
-            ) : (
-              <EditOutlined className="text-gray-800" />
-            )}
-          </button>
         </div>
 
         <span className="text-sm text-gray-400 text-center">
@@ -99,7 +88,19 @@ const ProjectItem: React.FC<ProjectRowProps> = ({
           })}
         </span>
 
+       
         <div className="flex items-center space-x-4">
+          <button
+            className="text-blue-500 hover:text-blue-600"
+            onClick={isEditing ? handleSave : () => setIsEditing(true)}
+            aria-label={isEditing ? "Save" : "Edit"}
+          >
+            {isEditing ? (
+              <CheckOutlined />
+            ) : (
+              <EditOutlined className="text-gray-800" />
+            )}
+          </button>
           <button
             className="text-red-500 hover:text-red-600"
             onClick={() => onDelete(id)}

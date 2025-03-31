@@ -7,7 +7,6 @@ const PlusButton: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    console.log('Button clicked!');
     dispatch(addProject({ name: 'New Project' })); 
   };
 
